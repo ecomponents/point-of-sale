@@ -5,7 +5,9 @@
     "license": "MIT",
     "keywords": [
         "point of sale",
-        "POS domain"
+        "POS",
+        "domain-driven point-of-sale",
+        "DDD POS"
     ],
     "authors": [
         {
@@ -52,6 +54,6 @@
         "cs-fix": "phpcbf --ignore=vendor,build",
         "cpd": "phpcpd --exclude=vendor,build --fuzzy src test",
         "license-check": "docheader check src/ test/",
-        "test": "phpunit --colors=always"
+        "test": "phpunit --verbose --colors=always"
     }
 }
