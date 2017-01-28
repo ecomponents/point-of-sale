@@ -15,18 +15,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "CodingMatters\\PoS\\": "src",
-            "ValueObject\\Customer\\": "value-object/Customer/src",
-            "ValueObject\\Product\\": "value-object/Product/src",
-            "ValueObject\\Order\\": "value-object/Order/src"
+            "CodingMatters\\PoS\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "CodingMattersTest\\PoS\\": "test",
-            "ValueObjectTest\\Customer\\": "value-object/Customer/test",
-            "ValueObjectTest\\Product\\": "value-object/Product/test",
-            "ValueObjectTest\\Order\\": "value-object/Order/test"
+            "CodingMattersTest\\PoS\\": "test"
         }
     },
     "require": {
