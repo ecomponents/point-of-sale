@@ -1,0 +1,63 @@
+{
+    "name": "codingmatters/point-of-sale",
+    "description": "Domain-driven POS implementation",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "point of sale",
+        "POS domain"
+    ],
+    "authors": [
+        {
+            "name": "Gab Amba",
+            "homepage": "https://www.gabbydgab.com/"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "CodingMatters\\PoS\\": "src",
+            "ValueObject\\Customer\\": "value-object/Customer/src",
+            "ValueObject\\Product\\": "value-object/Product/src",
+            "ValueObject\\Order\\": "value-object/Order/src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "CodingMattersTest\\PoS\\": "test",
+            "ValueObjectTest\\Customer\\": "value-object/Customer/test",
+            "ValueObjectTest\\Product\\": "value-object/Product/test",
+            "ValueObjectTest\\Order\\": "value-object/Order/test"
+        }
+    },
+    "require": {
+        "php": "^7.1"
+    },
+    "require-dev": {
+        "zendframework/zend-coding-standard": "^1.0",
+        "malukenho/docheader": "^0.1.5",
+        "sebastian/phpcpd": "^2.0",
+        "phpunit/phpunit": "^5.7",
+        "phpmd/phpmd": "^2.6"       
+    },
+    "scripts": {
+        "check": [
+            "@test",
+            "@license-check",
+            "@cs-check",
+            "@cpd",
+            "@md-check"
+        ],
+        "md-check": [
+            "phpmd src,test text unusedcode --strict",
+            "phpmd src,test text design --strict",
+            "phpmd src,test text codesize --strict",
+            "phpmd src,test text naming --strict",
+            "phpmd src,test text cleancode --minimumpriority"
+        ],
+        "cs-check": "phpcs --ignore=vendor,build",
+        "cs-fix": "phpcbf --ignore=vendor,build",
+        "cpd": "phpcpd --exclude=vendor,build --fuzzy src test",
+        "license-check": "docheader check src/ test/",
+        "test": "phpunit --colors=always"
+    }
+}
