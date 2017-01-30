@@ -26,7 +26,7 @@ final class BasketTest extends TestCase
     /**
      * Called every test-case
      */
-    public function setUp()
+    public function setUp() : void
     {
         $this->basket = new Basket();
     }
@@ -36,7 +36,7 @@ final class BasketTest extends TestCase
      *  - Should return no items
      *  - Should return zero amount
      */
-    public function testEmptyBasket()
+    public function testEmptyBasket() : void
     {
         $this->totalItemsShouldBe(self::NO_ITEMS);
         $this->totalAmountShouldBe(self::ZERO_AMOUNT);
@@ -49,14 +49,12 @@ final class BasketTest extends TestCase
      *  - Should return 1 item
      *  - Should return 10 as total amount
      */
-    public function testAddingSingleItemToTheBasket()
+    public function testAddingSingleItemToTheBasket() : void
     {
         $expectedItems = 1;
         $expectedAmount = 10;
 
-        $item = $this->createMock(Item::class);
-        $item->method("amount")
-            ->willReturn($expectedAmount);
+        $item = $this->mockItem($expectedAmount);
 
         $this->basket->addItem($item);
 
@@ -72,18 +70,13 @@ final class BasketTest extends TestCase
      *  - Should return 2 items
      *  - Should return 7.5 as total amount
      */
-    public function testAddingMultipleItemsIntoTheBasket()
+    public function testAddingMultipleItemsIntoTheBasket() : void
     {
         $expectedItems = 2;
         $expectedAmount = 7.5;
 
-        $item = $this->createMock(Item::class);
-        $item->method("amount")
-            ->willReturn(3);
-
-        $item2 = $this->createMock(Item::class);
-        $item2->method("amount")
-            ->willReturn(4.5);
+        $item = $this->mockItem(3);
+        $item2 = $this->mockItem(4.5);
 
         $this->basket->addItem($item, $item2);
 
@@ -98,14 +91,12 @@ final class BasketTest extends TestCase
      *  - Should return 1 item
      *  - Should return twice the amount (6)
      */
-    public function testAddingTheSameItemInTheBasket()
+    public function testAddingTheSameItemInTheBasket() : void
     {
         $expectedItems = 1;
         $expectedAmount = 6;
 
-        $item = $this->createMock(Item::class);
-        $item->method("amount")
-            ->willReturn(3);
+        $item = $this->mockItem(3);
 
         $this->basket->addItem($item, $item);
 
@@ -119,11 +110,11 @@ final class BasketTest extends TestCase
      * If basket is empty;
      *  - Should return ItemNotFound Exception
      */
-    public function testRemovingAnItemFromAnEmptyBasket()
+    public function testRemovingAnItemFromAnEmptyBasket() : void
     {
         $this->expectException(ItemNotFound::class);
 
-        $item = $this->createMock(Item::class);
+        $item = $this->mockItem();
 
         $this->basket->removeItem($item);
     }
@@ -136,18 +127,13 @@ final class BasketTest extends TestCase
      *  - Should return 2 items
      *  - Should return total amount of 7.5
      */
-    public function testRemoveItemFromTheBasket()
+    public function testRemoveItemFromTheBasket() : void
     {
         $expectedItems = 1;
         $expectedAmount = 3;
 
-        $item = $this->createMock(Item::class);
-        $item->method("amount")
-            ->willReturn(3);
-
-        $item2 = $this->createMock(Item::class);
-        $item2->method("amount")
-            ->willReturn(4.5);
+        $item = $this->mockItem(3);
+        $item2 = $this->mockItem(4.5);
 
         $this->basket->addItem($item, $item2);
 
@@ -160,19 +146,14 @@ final class BasketTest extends TestCase
     /**
      * RemovingTheSameItemIfItemIsAddedMultipleTimes
      */
-    public function testRemovingTheSameItemIfItemIsAddedMultipleTimes()
+    public function testRemovingTheSameItemIfItemIsAddedMultipleTimes() : void
     {
         $this->markTestIncomplete('logic not yet solved');
         $expectedItems = 1;
         $expectedAmount = 7.5;
 
-        $item = $this->createMock(Item::class);
-        $item->method("amount")
-            ->willReturn(3);
-
-        $item2 = $this->createMock(Item::class);
-        $item2->method("amount")
-            ->willReturn(7.5);
+        $item = $this->mockItem(3);
+        $item2 = $this->mockItem(7.5);
 
         $this->basket->addItem($item, $item, $item2);
 
@@ -202,5 +183,20 @@ final class BasketTest extends TestCase
     private function totalAmountShouldBe(float $total) : void
     {
         $this->assertEquals($total, $this->basket->totalAmount());
+    }
+
+    /**
+     * Helper method in creating mock Item object
+     *
+     * @param float $amount
+     * @return PHPUnit_Framework_MockObject_MockObject
+     */
+    private function mockItem(float $amount = 0)
+    {
+        $mock = $this->createMock(Item::class);
+        $mock->method("amount")
+            ->willReturn($amount);
+
+        return $mock;
     }
 }
